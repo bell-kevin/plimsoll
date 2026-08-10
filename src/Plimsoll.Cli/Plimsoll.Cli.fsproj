@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>plimsoll</AssemblyName>
+    <RootNamespace>Plimsoll.Cli</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>plimsoll</ToolCommandName>
+    <PackageId>Plimsoll.Cli</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Plimsoll contributors</Authors>
+    <Description>Solve relations between quantities known only to a range, with units checked and inferred.</Description>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Plimsoll.Present\Plimsoll.Present.fsproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "A1Q4aetfx44=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Kevin Bell\\Desktop\\coolProject\\src\\Plimsoll.Cli\\Plimsoll.Cli.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Kevin Bell\\.nuget\\packages\\fsharp.core\\10.1.302\\fsharp.core.10.1.302.nupkg.sha512"
+  ],
+  "logs": []
+}
