@@ -1,0 +1,22 @@
+# Tsiolkovsky's rocket equation, run backwards.
+#
+# The usual form is dv = ve * ln(m0/mf), evaluated left to right. Here the
+# delta-v is the thing we know (it is set by the orbit, not by us) and the mass
+# ratio is the unknown. The same relation is simply read in the other direction.
+#
+#   plimsoll examples/rocket.plim
+
+given delta_v = 9_300 .. 9_700 [m/s]    # low Earth orbit, including losses
+given isp     = 300 .. 340 [s]          # a good hydrolox upper stage
+given g0      = 9.806_65 [m/s^2]        # standard gravity, by definition
+
+exhaust_velocity = isp * g0
+
+# `mass_ratio` is never declared. It appears here, so it exists; and because
+# `log` only accepts a pure number, its dimension is inferred as dimensionless.
+delta_v = exhaust_velocity * log(mass_ratio)
+
+# Of the vehicle's wet mass, this fraction has to be propellant.
+propellant_fraction = 1 - 1 / mass_ratio
+
+plot isp, mass_ratio

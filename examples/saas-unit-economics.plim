@@ -1,0 +1,34 @@
+# A plan that cannot work, and the shortest explanation of why.
+#
+# This model is deliberately impossible. Rather than reporting "no solution",
+# Plimsoll deletes assumptions one at a time and keeps only those it cannot do
+# without, so what you get back is the irreducible core of the contradiction.
+#
+#   plimsoll examples/saas-unit-economics.plim    # exits 2
+#
+# Note which lines are *absent* from the conflict: the payback relations below
+# are satisfiable and so play no part in it.
+
+dimension money
+unit USD = money
+unit customer
+
+given cac           = 900 .. 1_400 [USD/customer]
+given monthly_price = 40 .. 60 [USD/month/customer]
+given gross_margin  = 72 .. 82 [%]
+given monthly_churn = 2.5 .. 4 [%/month]
+
+# A customer's expected lifetime is the reciprocal of the churn rate, which is
+# only dimensionally sensible because churn is a rate: 1/(1/month) is a month.
+lifetime = 1 / monthly_churn
+
+ltv           = monthly_price * gross_margin * lifetime
+ltv_cac_ratio = ltv / cac
+
+payback = cac / (monthly_price * gross_margin)
+
+# Satisfiable, and therefore not part of the conflict.
+payback <= 60 [month]
+
+# Not satisfiable. On these assumptions the ratio cannot exceed about 2.2.
+ltv_cac_ratio >= 3
