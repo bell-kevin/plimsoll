@@ -1,0 +1,61 @@
+# Publishes the browser build to GitHub Pages.
+#
+# Enable it under Settings -> Pages -> Source: GitHub Actions. The solver runs
+# entirely client-side, so the result is a static site with no backend at all.
+name: Deploy to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install the WebAssembly toolchain
+        run: dotnet workload install wasm-tools
+
+      - name: Publish
+        run: dotnet publish src/Plimsoll.Web -c Release -o site
+
+      # Pages serves the site from /<repository>/, so the SPA base href has to
+      # match or every asset request 404s.
+      - name: Rewrite base href for the repository subpath
+        run: |
+          repo="${GITHUB_REPOSITORY#*/}"
+          sed -i "s|<base href=\"/\" />|<base href=\"/$repo/\" />|g" site/wwwroot/index.html
+          grep -o '<base href="[^"]*"' site/wwwroot/index.html
+
+      # Without this, Pages' Jekyll pass strips _framework/ and the app cannot load.
+      - name: Disable Jekyll processing
+        run: touch site/wwwroot/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/wwwroot
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

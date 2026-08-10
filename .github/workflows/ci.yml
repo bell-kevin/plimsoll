@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Test suite
+        run: dotnet run --project tests/Plimsoll.Tests -c Release
+
+      - name: Build the CLI
+        run: dotnet build src/Plimsoll.Cli -c Release
+
+      # A .plim file is an executable assertion: exit 0 means satisfiable.
+      # If a change to the solver quietly breaks a worked example, this fails.
+      - name: Worked examples must stay satisfiable
+        run: |
+          plimsoll=./src/Plimsoll.Cli/bin/Release/net10.0/plimsoll
+          for f in examples/datacenter.plim \
+                   examples/rocket.plim \
+                   examples/heat-pump.plim \
+                   examples/timber-joist.plim; do
+            echo "--- $f"
+            "$plimsoll" "$f" --no-colour
+          done
+
+      # And the deliberately impossible one must still be caught, with exit 2.
+      - name: The impossible example must be reported impossible
+        run: |
+          plimsoll=./src/Plimsoll.Cli/bin/Release/net10.0/plimsoll
+          set +e
+          "$plimsoll" examples/saas-unit-economics.plim --no-colour
+          code=$?
+          set -e
+          echo "exit status: $code"
+          test "$code" -eq 2
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install the WebAssembly toolchain
+        run: dotnet workload install wasm-tools
+
+      - name: Publish the browser build
+        run: dotnet publish src/Plimsoll.Web -c Release -o site
