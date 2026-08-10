@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Plimsoll.Present</RootNamespace>
+    <AssemblyName>Plimsoll.Present</AssemblyName>
+    <!-- Shared by the CLI and the browser build, so there is one definition of
+         what a solution looks like rather than two that drift apart. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Report.fs" />
+    <Compile Include="Html.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Plimsoll.Core\Plimsoll.Core.fsproj" />
+  </ItemGroup>
+
+</Project>

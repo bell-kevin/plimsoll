@@ -1,0 +1,14 @@
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\Plimsoll.Present.fsproj.AssemblyReference.cache
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\Plimsoll.Present.AssemblyInfoInputs.cache
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\Plimsoll.Present.AssemblyInfo.fs
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\Plimsoll.Present.fsproj.CoreCompileInputs.cache
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\bin\Debug\net10.0\Plimsoll.Present.deps.json
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\bin\Debug\net10.0\Plimsoll.Present.dll
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\bin\Debug\net10.0\Plimsoll.Present.pdb
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\bin\Debug\net10.0\Plimsoll.Core.dll
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\bin\Debug\net10.0\Plimsoll.Core.pdb
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\Plimsoll.CBF81A38.Up2Date
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\Plimsoll.Present.dll
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\refint\Plimsoll.Present.dll
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\Plimsoll.Present.pdb
+C:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Present\obj\Debug\net10.0\ref\Plimsoll.Present.dll
