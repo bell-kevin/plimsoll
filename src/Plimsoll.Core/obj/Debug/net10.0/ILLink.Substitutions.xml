@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="Plimsoll.Core">
+    <resource name="FSharpSignatureData.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedData.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpSignatureDataB.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpSignatureCompressedDataB.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationData.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedData.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationDataB.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationCompressedDataB.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpOptimizationInfo.Plimsoll.Core" action="remove"></resource>
+    <resource name="FSharpSignatureInfo.Plimsoll.Core" action="remove"></resource>
+  </assembly>
+</linker>

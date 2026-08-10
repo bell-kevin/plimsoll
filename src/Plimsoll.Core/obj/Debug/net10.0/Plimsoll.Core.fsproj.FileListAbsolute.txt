@@ -1,0 +1,11 @@
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\Plimsoll.Core.fsproj.AssemblyReference.cache
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\Plimsoll.Core.AssemblyInfoInputs.cache
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\Plimsoll.Core.AssemblyInfo.fs
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\Plimsoll.Core.fsproj.CoreCompileInputs.cache
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\bin\Debug\net10.0\Plimsoll.Core.deps.json
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\bin\Debug\net10.0\Plimsoll.Core.dll
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\bin\Debug\net10.0\Plimsoll.Core.pdb
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\Plimsoll.Core.dll
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\refint\Plimsoll.Core.dll
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\Plimsoll.Core.pdb
+c:\Users\Kevin Bell\Desktop\coolProject\src\Plimsoll.Core\obj\Debug\net10.0\ref\Plimsoll.Core.dll
