@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Plimsoll.Tests</AssemblyName>
+    <!-- No test framework package: the harness is 40 lines at the top of
+         Program.fs. `dotnet run` is the whole story, offline, on any platform. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Plimsoll.Core\Plimsoll.Core.fsproj" />
+    <ProjectReference Include="..\..\src\Plimsoll.Present\Plimsoll.Present.fsproj" />
+  </ItemGroup>
+
+</Project>
