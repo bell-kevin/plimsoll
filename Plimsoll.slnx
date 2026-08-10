@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Plimsoll.Cli/Plimsoll.Cli.fsproj" />
+    <Project Path="src/Plimsoll.Core/Plimsoll.Core.fsproj" />
+    <Project Path="src/Plimsoll.Present/Plimsoll.Present.fsproj" />
+    <Project Path="src/Plimsoll.Web/Plimsoll.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Plimsoll.Tests/Plimsoll.Tests.fsproj" />
+  </Folder>
+</Solution>
