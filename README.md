@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 # Plimsoll
 
 https://bell-kevin.github.io/plimsoll/
@@ -292,3 +294,5 @@ Copyright (C) 2026 Plimsoll contributors.
 Licensed under the **GNU Affero General Public License, version 3 or later**. This is free software: you may use, study, share and modify it. If you run a modified version as a network service, the AGPL requires you to offer its source to your users. See [LICENSE](LICENSE).
 
 https://bell-kevin.github.io/plimsoll/
+
+<p align="left"><a href="#readme-top">back to top</a></p>
