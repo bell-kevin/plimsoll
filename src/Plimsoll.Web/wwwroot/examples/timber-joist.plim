@@ -1,0 +1,28 @@
+# Will a timber floor joist pass its deflection check over this span?
+#
+# The serviceability limit is span/300, and the span is itself uncertain -- so
+# the limit is uncertain too. A constraint between two ranges is exactly the
+# sort of thing a spreadsheet cannot express honestly.
+#
+#   plimsoll examples/timber-joist.plim --svg joist.svg
+
+given span      = 4.6 .. 4.8 [m]
+given udl       = 1.5 .. 2.5 [kN/m^2]    # dead plus imposed, domestic floor
+given spacing   = 0.4 .. 0.6 [m]         # joist centres
+given width     = 0.047 .. 0.05 [m]      # sawn 47 mm, allowing for tolerance
+given depth     = 0.20 .. 0.25 [m]
+given e_modulus = 8 .. 11 [GPa]          # C24 softwood, along the grain
+
+line_load = udl * spacing
+
+# Second moment of area of a rectangle. The exponent has to be an exact integer
+# for the dimensions to work out, and it is: m * m^3 = m^4.
+second_moment = width * depth^3 / 12
+
+# Midspan deflection of a simply supported beam under uniform load.
+deflection = 5 * line_load * span^4 / (384 * e_modulus * second_moment)
+
+# Serviceability limit. Both sides are ranges.
+deflection <= span / 300
+
+plot depth, deflection

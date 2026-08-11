@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+    <!-- The whole solver runs client-side on the .NET WebAssembly runtime, so
+         the published output is static files and nothing is sent anywhere. -->
+    <ServiceWorkerAssetsManifest>false</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.10" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Plimsoll.Present\Plimsoll.Present.fsproj" />
+  </ItemGroup>
+
+  <!-- The example models are served to the browser, but they live in examples/
+       at the repository root so that the CLI, the docs and the site all use the
+       same files rather than three copies that drift apart. -->
+  <Target Name="CopyExampleModels" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <ExampleModels Include="$(MSBuildProjectDirectory)\..\..\examples\*.plim" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ExampleModels)"
+          DestinationFolder="$(MSBuildProjectDirectory)\wwwroot\examples"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

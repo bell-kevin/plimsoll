@@ -1,0 +1,39 @@
+# How many servers does this service need, and what actually decides the answer?
+#
+# Nothing here is known exactly, so nothing is written as though it were. The
+# budget on the last line is a *constraint*, not an output: Plimsoll pushes it
+# backwards through the model and reports the cache hit rate it implies.
+#
+#   plimsoll examples/datacenter.plim
+
+dimension money
+unit USD = money
+
+# Fresh base dimensions, so a request can never be added to a user by mistake.
+unit user
+unit request
+unit core
+unit server
+
+given peak_users        = 400_000 .. 600_000 [user]
+given req_per_user      = 0.3 .. 1.2 [request/s/user]
+given cache_hit_rate    = 82 .. 94 [%]
+given req_per_core      = 180 .. 240 [request/s/core]
+given cores_per_server  = 32 [core/server]
+given failover_headroom = 1.35 .. 1.6
+given cost_per_server   = 220 .. 260 [USD/month/server]
+
+# Traffic offered, and the part of it that misses cache and reaches the origin.
+offered_load = peak_users * req_per_user
+origin_load  = offered_load * (1 - cache_hit_rate)
+
+# Capacity, carrying enough headroom to lose a zone and survive.
+cores_needed = origin_load * failover_headroom / req_per_core
+servers      = cores_needed / cores_per_server
+monthly_cost = servers * cost_per_server
+
+# The budget is real. Read the ASSUMED table after solving: the lower bound on
+# cache_hit_rate is no longer the 82% written above, because the budget forbids it.
+monthly_cost <= 800 [USD/month]
+
+plot cache_hit_rate, servers

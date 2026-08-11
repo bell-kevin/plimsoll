@@ -1,0 +1,25 @@
+# Sizing a heat pump against a design-day cold snap.
+#
+# Every input is a range, because every one of them really is: the fabric
+# performance of an existing house is not a number anybody knows to three
+# significant figures.
+#
+#   plimsoll examples/heat-pump.plim --svg region.svg
+
+given floor_area      = 180 .. 195 [m^2]
+given heat_loss_coeff = 0.9 .. 1.4 [W/m^2/K]   # whole envelope, per kelvin
+given indoor_target   = 294.15 [K]             # 21 degrees C
+given outdoor_design  = 265.15 [K]             # -8 degrees C
+given cop             = 2.4 .. 3.2             # seasonal, at this flow temperature
+
+# Kelvin minus kelvin is kelvin, and the dimension checker knows it.
+delta_t     = indoor_target - outdoor_design
+heat_demand = floor_area * heat_loss_coeff * delta_t
+
+electrical_input = heat_demand / cop
+
+# The available circuit will not carry more than this. Watch what the limit
+# implies about the fabric: heat_loss_coeff can no longer reach its stated 1.4.
+electrical_input <= 2.2 [kW]
+
+plot heat_loss_coeff, electrical_input
