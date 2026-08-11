@@ -4,7 +4,7 @@
 
 https://bell-kevin.github.io/plimsoll/
 
-**A spreadsheet computes one answer from numbers you don't have. Plimsoll computes what is still possible from the ranges you actually know.**
+**A spreadsheet makes you invent a number for everything you only know a range for, then computes one confident answer from your inventions. Plimsoll computes what is still possible from the ranges you actually know.**
 
 You write *relations* between quantities, with units, and you write **ranges instead of numbers** — because a cache hit rate is "82 to 94 percent", not 88. Plimsoll then answers four questions, and only the first is one a spreadsheet can answer at all:
 
