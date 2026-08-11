@@ -1,0 +1,151 @@
+@page "/"
+@inject HttpClient Http
+
+@*
+    Plimsoll - a dimensionally-typed interval constraint solver.
+    Copyright (C) 2026  Plimsoll contributors
+    SPDX-License-Identifier: AGPL-3.0-or-later
+
+    This page is deliberately thin. Compiling, solving and rendering all happen
+    in F# (Plimsoll.Present.Html.solveToHtml); the only jobs here are to hold the
+    text the user is editing and to put the resulting markup on the page.
+
+    The solver runs in the browser on the .NET WebAssembly runtime, which means
+    it is the same compiled assembly the command line uses -- so the
+    floating-point primitives its soundness depends on behave identically. No
+    model text ever leaves the machine.
+*@
+
+<div class="wrap">
+    <header>
+        <div class="brand">
+            <h1>Plimsoll</h1>
+            <p class="tagline">
+                Relations between quantities you only know to a range &mdash; solved in every direction.
+            </p>
+        </div>
+        <div class="badges">
+            <span class="badge">runs entirely in your browser</span>
+            <span class="badge">AGPL-3.0</span>
+        </div>
+    </header>
+
+    <div class="examples">
+        <span class="examples-label">Load an example</span>
+        @foreach (var e in examples)
+        {
+            <button class="chip @(current == e.File ? "on" : "")"
+                    @onclick="() => Load(e.File)"
+                    title="@e.Blurb">@e.Name</button>
+        }
+    </div>
+
+    <div class="split">
+        <section class="pane">
+            <div class="pane-head">
+                Model
+                <span class="pane-hint">re-solves as you type</span>
+            </div>
+            <textarea class="editor"
+                      spellcheck="false"
+                      autocomplete="off"
+                      value="@source"
+                      @oninput="OnEdit"></textarea>
+        </section>
+
+        <section class="pane">
+            <div class="pane-head">Solution</div>
+            <div class="results">@((MarkupString)resultHtml)</div>
+        </section>
+    </div>
+
+    <footer>
+        <p>
+            Free software under the
+            <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU AGPL v3</a>.
+            Bounds are guaranteed enclosures, not samples &mdash; see the project's
+            README for what that does and does not promise.
+        </p>
+    </footer>
+</div>
+
+@code {
+    private sealed record Example(string Name, string File, string Blurb);
+
+    private readonly Example[] examples =
+    {
+        new("Datacentre", "datacenter.plim", "A budget pushed backwards into a required cache hit rate"),
+        new("Rocket", "rocket.plim", "Tsiolkovsky's equation read in reverse, through a log"),
+        new("Heat pump", "heat-pump.plim", "A circuit limit narrowing what the building fabric may be"),
+        new("Timber joist", "timber-joist.plim", "A check where both sides of the inequality are ranges"),
+        new("Impossible plan", "saas-unit-economics.plim", "A contradiction, reduced to its minimal cause"),
+    };
+
+    private string source = DefaultModel;
+    private string resultHtml = "";
+    private string current = "datacenter.plim";
+
+    protected override void OnInitialized() => Solve();
+
+    private void OnEdit(ChangeEventArgs e)
+    {
+        source = e.Value?.ToString() ?? "";
+        current = "";
+        Solve();
+    }
+
+    private void Solve() => resultHtml = Plimsoll.Present.Html.solveToHtml(source);
+
+    private async Task Load(string file)
+    {
+        try
+        {
+            source = await Http.GetStringAsync($"examples/{file}");
+            current = file;
+            Solve();
+        }
+        catch (Exception ex)
+        {
+            resultHtml = $"<div class=\"diags\"><div class=\"diag error\"><span class=\"msg\">"
+                       + $"could not load {Plimsoll.Present.Html.escape(file)}: "
+                       + $"{Plimsoll.Present.Html.escape(ex.Message)}</span></div></div>";
+        }
+    }
+
+    // Shown on first load: the budget on the last relation is a *constraint*,
+    // and the ASSUMED table reports the cache hit rate it forces.
+    private const string DefaultModel = """
+# Everything re-solves as you type.
+#
+# The last relation is a budget, not a result. Watch what it does to the range
+# of cache_hit_rate in the ASSUMED table: Plimsoll pushes the limit backwards
+# through five relations and reports the hit rate you would actually need.
+
+dimension money
+unit USD = money
+
+# Fresh base dimensions, so a request can never be added to a user by mistake.
+unit user
+unit request
+unit core
+unit server
+
+given peak_users        = 400_000 .. 600_000 [user]
+given req_per_user      = 0.3 .. 1.2 [request/s/user]
+given cache_hit_rate    = 82 .. 94 [%]
+given req_per_core      = 180 .. 240 [request/s/core]
+given cores_per_server  = 32 [core/server]
+given failover_headroom = 1.35 .. 1.6
+given cost_per_server   = 220 .. 260 [USD/month/server]
+
+offered_load = peak_users * req_per_user
+origin_load  = offered_load * (1 - cache_hit_rate)
+cores_needed = origin_load * failover_headroom / req_per_core
+servers      = cores_needed / cores_per_server
+monthly_cost = servers * cost_per_server
+
+monthly_cost <= 800 [USD/month]
+
+plot cache_hit_rate, servers
+""";
+}
